@@ -14,12 +14,9 @@ tasks:
 
     command: |
       mamba activate mlopsproject
-      echo "<peon voice> Ready to work!"
-
-  - name: Start Server
-    init: cd week3/project/app/
-
-    command: uvicorn server:app --reload
+      cd week3/project/app/
+      uvicorn server:app --reload
+      echo "Ready to work!"
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 ports:
