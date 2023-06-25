@@ -6,13 +6,20 @@ tasks:
 
   - name: Conda Environment Setup
     init: |
-      wget "https://repo.anaconda.com/miniconda/Miniconda3-py39_23.3.1-0-Linux-x86_64.sh"
-      bash Miniconda3-py39_23.3.1-0-Linux-x86_64.sh && rm -rf Miniconda3-py39_23.3.1-0-Linux-x86_64.sh
-      conda create --name mlopsproject --file week3/project/requirements.txt
+      wget -O Mambaforge.sh  "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
+      bash Mambaforge.sh -b -p "${HOME}/conda" && rm -f Mambaforge.sh
+      source "${HOME}/conda/etc/profile.d/conda.sh"
+      source "${HOME}/conda/etc/profile.d/mamba.sh"
+      mamba create --name mlopsproject --file week3/project/requirements.txt
 
     command: |
-      conda activate mlopsproject
+      mamba activate mlopsproject
       echo "<peon voice> Ready to work!"
+
+  - name: Start Server
+    init: cd week3/project/app/
+
+    command: uvicorn server:app --reload
 
 # List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
 ports:
