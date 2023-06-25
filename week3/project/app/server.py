@@ -49,7 +49,6 @@ def shutdown_event():
     # clean up
     """
     [TO BE IMPLEMENTED]
-    1. Make sure to flush the log file and close any file pointers to avoid corruption
     2. Any other cleanups
     """
     logs.flush()
@@ -88,6 +87,7 @@ def predict(request: PredictRequest):
 
     logs.write(str(request_output))
     logs.write('\n')
+    logs.flush()
 
     response = PredictResponse(scores=prediction_scores, label=predicted_label)
     return response
